@@ -7,8 +7,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-
-	"github.com/devpablocristo/tarefaapi/internal/platform/env"
+	// "github.com/devpablocristo/tarefaapi/internal/platform/env"
 )
 
 var (
