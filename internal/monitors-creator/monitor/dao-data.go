@@ -6,14 +6,14 @@ import (
 
 type MonitorDaoData struct {
 	ID               int64      `db:"id"`
-	Brand            BrandDAO   `db:"brand"`
+	Brand            BrandDao   `db:"brand"`
 	BusinessUnit     string     `db:"business_unit"`
 	ProductName      string     `db:"product_name"`
 	Flow             string     `db:"flow"`
 	Platform         string     `db:"platform"`
-	BrandIdentifiers BrandIDDAO `db:"brand_ids"`
+	BrandIdentifiers BrandIDDao `db:"brand_ids"`
 	MonthlyTPV       float64    `db:"monthly_tpv"`
-	KAM              KAMDAO     `db:"KAM"`
+	KAM              KAMDao     `db:"KAM"`
 	CreatedAt        time.Time  `db:"created_at"`
 	UpdatedAt        time.Time  `db:"updated_at"`
 	Deleted          bool       `db:"deleted"`
@@ -21,16 +21,16 @@ type MonitorDaoData struct {
 	// Threshold Threshold   `db:"threshold"`
 }
 
-type BrandDAO struct {
+type BrandDao struct {
 	Name                    string     `db:"name"`
 	Site                    string     `db:"site"`
 	CustomerHourStart       time.Time  `db:"customer_hour_start"`
 	CustomerHourEnd         time.Time  `db:"customer_hour_end"`
-	SellerContact           ContactDAO `db:"sellet_contact"`
-	TechnicalContactContact ContactDAO `db:"technical_contact"`
+	SellerContact           ContactDao `db:"sellet_contact"`
+	TechnicalContactContact ContactDao `db:"technical_contact"`
 }
 
-type BrandIDDAO struct {
+type BrandIDDao struct {
 	CustIDs       string `db:"customer_id"`
 	AppID         string `db:"app_id"`
 	MarketplaceID string `db:"marketplace_id"`
@@ -39,11 +39,11 @@ type BrandIDDAO struct {
 	SponsorID     string `db:"sponsor_id"`
 }
 
-type KAMDAO struct {
-	AccountManager ContactDAO `db:"account_manager"`
+type KAMDao struct {
+	AccountManager ContactDao `db:"account_manager"`
 }
 
-type ContactDAO struct {
+type ContactDao struct {
 	Name  string `db:"name"`
 	Email string `db:"email"`
 	Phone string `db:"phone"`
