@@ -1,30 +1,26 @@
 package main
 
 import (
-	"fmt"
-	"monitors-creator/internal/monitors-factory/monitor"
+	"log"
+
+	"github.com/pkg/errors"
+
+	"monitors-creator/cmd/handlers"
+	usecase "monitors-creator/internal/monitors-creator"
+	"monitors-creator/internal/monitors-creator/monitor"
+	"monitors-creator/internal/platform/memdb"
 )
 
 func main() {
-	// rabbitMqManager, err := hdl.NewRabbitMQManager("amqp://guest:guest@localhost:5672/", "myQueue")
-	// if err != nil {
-	// 	log.Fatalf("Failed to initialize RabbitMQ: %v", err)
-	// }
-	// defer rabbitMqManager.Close()
+	db := memdb.NewDB()
+	repo := monitor.NewMemoryRepo(db)
+	u := usecase.NewMonitorUsecase(repo)
+	h := handlers.NewMonitorHandler(u)
 
-	dbConn, err := mysql.GetConnectionDB()
-	if err != nil {
-		return nil, fmt.Errorf("error opening MySQL connection: %w", err)
+	if err := handlers.NewHTTPServer(*h); err != nil {
+		log.Fatal(errors.Errorf("error starting HTTP server: %v", err))
 	}
-	repository := monitor.NewMonitorRepository()
-	_ = repository
 }
-
-// func main() {
-// 	if err := start(); err != nil {
-// 		log.Fatalf("Application failed: %v", err)
-// 	}
-// }
 
 // func start() error {
 // 	if err := env.LoadEnv(); err != nil {

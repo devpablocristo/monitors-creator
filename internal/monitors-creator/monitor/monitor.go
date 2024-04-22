@@ -8,15 +8,15 @@ import (
 )
 
 type Monitor struct {
-	ID           ID
-	Brand        Brand
-	BusinessUnit BusinessUnit
-	Product      Product
-	Flow         Flow
-	Platform     Platform
-	BrandIdentifiers  brandid.BrandIdentifiers
-	MonthlyTPV   MonthlyTPV
-	KAM          KAM
+	ID               ID
+	Brand            Brand
+	BusinessUnit     BusinessUnit
+	Product          Product
+	Flow             Flow
+	Platform         Platform
+	BrandIdentifiers brandid.BrandIdentifiers
+	MonthlyTPV       MonthlyTPV
+	KAM              KAM
 }
 
 type Name string
@@ -35,6 +35,10 @@ func (n Name) isEmpty() bool {
 }
 
 type ID string
+
+func (i ID) String() string {
+	return string(i)
+}
 
 func (i *ID) Create() string {
 	return uuid.New().String()
