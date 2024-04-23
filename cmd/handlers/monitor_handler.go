@@ -18,20 +18,22 @@ func NewMonitorHandler(usecase monitor.MonitorUsecasePort) *MonitorHandler {
 }
 
 func (h MonitorHandler) CreateMonitor(c *gin.Context) {
+	ctx := c.Request.Context()
+
 	var payload MonitorPayload
 	if err := c.BindJSON(&payload); err != nil {
-		c.JSON(http.StatusBadRequest, presenter.ApiError(err, c))
+		c.JSON(http.StatusBadRequest, presenter.Error(err))
 		return
 	}
 
 	monitor, err := mapPayloadToDomain(payload)
 	if err != nil {
-		c.JSON(http.StatusUnprocessableEntity, presenter.ApiError(err, c))
+		c.JSON(http.StatusUnprocessableEntity, presenter.Error(err))
 		return
 	}
 
-	if err := h.usecase.CreateMonitor(&monitor); err != nil {
-		c.JSON(http.StatusInternalServerError, presenter.ApiError(err, c))
+	if err := h.usecase.CreateMonitor(ctx, &monitor); err != nil {
+		c.JSON(http.StatusInternalServerError, presenter.Error(err))
 		return
 	}
 

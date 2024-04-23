@@ -12,9 +12,11 @@ import (
 )
 
 func main() {
+	//TODO: CRIAR COROUTINE QUE PINGA O DB E SE FALHAR, REABRE E ATUALIZA REFERENCIA DO DB NO REPO (SINGLETON)
+
 	db := memdb.NewDB()
-	repo := monitor.NewMemoryRepo(db)
-	u := usecase.NewMonitorUsecase(repo)
+	r := monitor.NewMemoryRepo(db)
+	u := usecase.NewMonitorUsecase(r)
 	h := handlers.NewMonitorHandler(u)
 
 	if err := handlers.NewHTTPServer(*h); err != nil {

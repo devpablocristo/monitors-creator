@@ -1,6 +1,8 @@
 package monitor
 
 import (
+	"net/mail"
+
 	"github.com/corthmann/go-time-intervals/timeinterval"
 	"github.com/google/uuid"
 
@@ -47,6 +49,15 @@ func (i *ID) Create() string {
 type Enabled bool
 
 type Email string
+
+func (e Email) String() string {
+	return string(e)
+}
+
+func (e Email) Validate() bool {
+	_, err := mail.ParseAddress(e.String())
+	return err == nil
+}
 
 type Phone string
 

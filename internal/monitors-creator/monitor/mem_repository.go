@@ -1,6 +1,9 @@
 package monitor
 
-import "monitors-creator/internal/platform/memdb"
+import (
+	"errors"
+	"monitors-creator/internal/platform/memdb"
+)
 
 func NewMemoryRepo(db *memdb.MemDB) MonitorRepositoryPort {
 	return &MemRepo{
@@ -17,33 +20,40 @@ func (m *MemRepo) Create(monitor *Monitor) error {
 	return nil
 }
 
-// func (l localRepo) Save(id string, report Report) error {
-// 	l.db.SaveItem(id, report)
-// 	return nil
-// }
+func (m *MemRepo) Update(monitor *Monitor) error {
+	m.db[monitor.ID.String()] = monitor
+	return nil
+}
 
-// func (db LocalDB) SaveItem(id string, item interface{}) {
-// 	db.storage[id] = item
-// }
+func (m *MemRepo) Get(id string) (*Monitor, error) {
+	value, ok := m.db[id]
+	if !ok {
+		return nil, errors.New("id not found")
+	}
 
-// func (db LocalDB) GetItem(id string) interface{} {
-// 	item, ok := db.storage[id]
-// 	if !ok {
-// 		return nil
-// 	}
+	monitor, ok := value.(*Monitor)
+	if !ok {
+		return nil, errors.New("value is not a monitor")
+	}
 
-// 	return item
-// }
+	return monitor, nil
+}
 
-// func (db LocalDB) DeleteItem(id string) {
-// 	delete(db.storage, id)
-// }
+func (m *MemRepo) GetAll() ([]*Monitor, error) {
+	var monitors []*Monitor
+	for _, value := range m.db {
+		monitor, ok := value.(*Monitor)
+		if !ok {
+			return nil, errors.New("value is not a monitor")
+		}
 
-// func (db LocalDB) Dump() []interface{} {
-// 	var items []interface{}
-// 	for _, value := range db.storage {
-// 		items = append(items, value)
-// 	}
+		monitors = append(monitors, monitor)
+	}
 
-// 	return items
-// }
+	return monitors, nil
+}
+
+func (m *MemRepo) Delete(id string) error {
+	delete(m.db, id)
+	return nil
+}
