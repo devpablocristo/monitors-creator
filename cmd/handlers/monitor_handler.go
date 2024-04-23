@@ -36,10 +36,30 @@ func (h MonitorHandler) CreateMonitor(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, presenter.Error(err))
 		return
 	}
-
-	c.JSON(http.StatusCreated, MonitorResponse(monitor))
+	// TODO: CHAMAR DOMAIN2JSON OU PASSAR STRUCT DIRETO
+	// c.JSON(http.StatusCreated, MonitorResponse(monitor))
+	c.JSON(http.StatusCreated, monitor)
 }
 
+func (h MonitorHandler) GetMonitor(c *gin.Context) {
+	id := c.Param("id")
+
+	monitor, err := h.usecase.GetMonitor(c.Request.Context(), id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, presenter.Error(err))
+		return
+	}
+
+	// TODO: CHAMAR DOMAIN2JSON OU PASSAR STRUCT DIRETO
+	c.JSON(http.StatusOK, monitor)
+
+}
+
+func (h MonitorHandler) UpdateMonitor(c *gin.Context) {}
+
+func (h MonitorHandler) DeleteMonitor(c *gin.Context) {}
+
+func (h MonitorHandler) GetAllMonitors(c *gin.Context) {}
 // func (h MonitorHandler) MonitorRead(c *gin.Context) {
 // 	// id := c.Param("id")
 // 	// dev, err := h.usecase.Read(id)

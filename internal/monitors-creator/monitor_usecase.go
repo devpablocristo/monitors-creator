@@ -14,10 +14,10 @@ func NewMonitorUsecase(repo monitor.MonitorRepositoryPort) monitor.MonitorUsecas
 }
 
 func (u MonitorUsecase) CreateMonitor(ctx context.Context, monitor *monitor.Monitor) error {
+	monitor.ID = monitor.ID.Create()
 	if err := u.repository.Create(monitor); err != nil {
 		return err
 	}
-	monitor.ID = "999"
 	return nil
 }
 

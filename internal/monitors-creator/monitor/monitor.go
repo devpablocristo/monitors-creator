@@ -42,8 +42,8 @@ func (i ID) String() string {
 	return string(i)
 }
 
-func (i *ID) Create() string {
-	return uuid.New().String()
+func (i *ID) Create() ID {
+	return ID(uuid.New().String())
 }
 
 type Enabled bool
