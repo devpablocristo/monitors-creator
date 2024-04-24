@@ -1,0 +1,5 @@
+log_level: debug
+auth:
+  kind: user #user/app
+  middleware: dummy #dummy/user
+datadog_api_url: https://api.us5.datadoghq.com
