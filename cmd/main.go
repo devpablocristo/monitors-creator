@@ -23,8 +23,7 @@ func main() {
 	u := usecase.NewMonitorUsecase(r)
 	h := handlers.NewMonitorHandler(u)
 
-	handlers.NewFuryApplication(h)
-	// if err := handlers.NewHTTPServer(*h); err != nil {
-	// 	panic(errors.Errorf("error starting HTTP server: %v", err))
-	// }
+	if err := handlers.NewFuryApplication(h); err != nil {
+		panic(err)
+	}
 }
