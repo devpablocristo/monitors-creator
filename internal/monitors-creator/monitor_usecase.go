@@ -33,6 +33,6 @@ func (u MonitorUsecase) DeleteMonitor(ctx context.Context, id string) error {
 	return u.repository.Delete(id)
 }
 
-func (u MonitorUsecase) GetAllMonitors(ctx context.Context) ([]*monitor.Monitor, error) {
+func (u MonitorUsecase) GetAllMonitors(ctx context.Context) ([]monitor.Monitor, error) {
 	return u.repository.GetAll()
 }
