@@ -39,17 +39,17 @@ func (m *MemRepo) Get(id string) (*Monitor, error) {
 	return monitor, nil
 }
 
-func (m *MemRepo) GetAll() ([]*Monitor, error) {
-	var monitors []*Monitor
+func (m *MemRepo) GetAll() ([]Monitor, error) {
+	var monitors []Monitor
+	// a := m.db
 	for _, value := range m.db {
 		monitor, ok := value.(*Monitor)
 		if !ok {
 			return nil, errors.New("value is not a monitor")
 		}
 
-		monitors = append(monitors, monitor)
+		monitors = append(monitors, *monitor)
 	}
-
 	return monitors, nil
 }
 
