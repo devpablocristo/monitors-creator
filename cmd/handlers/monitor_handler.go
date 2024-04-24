@@ -3,9 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+	"github.com/melisource/fury_go-core/pkg/web"
 
-	"monitors-creator/cmd/handlers/presenter"
 	"monitors-creator/internal/monitors-creator/monitor"
 )
 
@@ -17,64 +16,55 @@ func NewMonitorHandler(usecase monitor.MonitorUsecasePort) *MonitorHandler {
 	return &MonitorHandler{usecase: usecase}
 }
 
-func (h MonitorHandler) CreateMonitor(c *gin.Context) {
-	ctx := c.Request.Context()
+func (h MonitorHandler) CreateMonitor(w http.ResponseWriter, r *http.Request) error {
+	ctx := r.Context()
 
 	var payload MonitorPayload
-	if err := c.BindJSON(&payload); err != nil {
-		c.JSON(http.StatusBadRequest, presenter.Error(err))
-		return
+
+	if err := web.DecodeJSON(r, &payload); err != nil {
+		//TODO MYLOG
+		return web.EncodeJSON(w, err, http.StatusUnprocessableEntity)
 	}
 
 	monitor, err := mapPayloadToDomain(payload)
 	if err != nil {
-		c.JSON(http.StatusUnprocessableEntity, presenter.Error(err))
-		return
+		//TODO MYLOG
+		return web.EncodeJSON(w, err, http.StatusUnprocessableEntity)
 	}
 
 	if err := h.usecase.CreateMonitor(ctx, &monitor); err != nil {
-		c.JSON(http.StatusInternalServerError, presenter.Error(err))
-		return
+		//TODO MYLOG
+		return web.EncodeJSON(w, err, http.StatusInternalServerError)
 	}
+
 	// TODO: CHAMAR DOMAIN2JSON OU PASSAR STRUCT DIRETO
-	// c.JSON(http.StatusCreated, MonitorResponse(monitor))
-	c.JSON(http.StatusCreated, monitor)
+	// TODO: MYLOG
+	return web.EncodeJSON(w, monitor, http.StatusOK)
 }
 
-func (h MonitorHandler) GetMonitor(c *gin.Context) {
-	id := c.Param("id")
+func (h MonitorHandler) GetMonitor(w http.ResponseWriter, r *http.Request) error {
+	ctx := r.Context()
+	id := web.Param(r, "id")
 
-	monitor, err := h.usecase.GetMonitor(c.Request.Context(), id)
+	monitor, err := h.usecase.GetMonitor(ctx, id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, presenter.Error(err))
-		return
+		// TODO: MYLOG
+		return web.EncodeJSON(w, err, http.StatusInternalServerError)
 	}
 
 	// TODO: CHAMAR DOMAIN2JSON OU PASSAR STRUCT DIRETO
-	c.JSON(http.StatusOK, monitor)
-
+	// TODO: MYLOG
+	return web.EncodeJSON(w, monitor, http.StatusOK)
 }
 
-func (h MonitorHandler) UpdateMonitor(c *gin.Context) {}
+func (h MonitorHandler) UpdateMonitor(w http.ResponseWriter, r *http.Request) error {
+	return nil
+}
 
-func (h MonitorHandler) DeleteMonitor(c *gin.Context) {}
+func (h MonitorHandler) DeleteMonitor(w http.ResponseWriter, r *http.Request) error {
+	return nil
+}
 
-func (h MonitorHandler) GetAllMonitors(c *gin.Context) {}
-// func (h MonitorHandler) MonitorRead(c *gin.Context) {
-// 	// id := c.Param("id")
-// 	// dev, err := h.usecase.Read(id)
-// 	// if err != nil {
-// 	// 	c.JSON(http.StatusInternalServerError, presenter.ApiError{})
-// 	// 	return
-// 	// }
-
-// 	// c.JSON(http.StatusOK, presenter.Developer(dev))
-// }
-
-// func (h MonitorHandler) MonitorUpdate(c *gin.Context) {
-
-// }
-
-// func (h MonitorHandler) MonitorDelete(c *gin.Context) {
-
-// }
+func (h MonitorHandler) GetAllMonitors(w http.ResponseWriter, r *http.Request) error {
+	return nil
+}

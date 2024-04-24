@@ -26,7 +26,4 @@ func main() {
 	if err := handlers.NewFuryApplication(h); err != nil {
 		panic(err)
 	}
-	// if err := handlers.NewHTTPServer(*h); err != nil {
-	// 	panic(errors.Errorf("error starting HTTP server: %v", err))
-	// }
 }
