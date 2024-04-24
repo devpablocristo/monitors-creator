@@ -7,7 +7,7 @@ toolchain go1.22.1
 require (
 	github.com/corthmann/go-time-intervals v0.0.0-20190625085138-4c18cb04b8d6
 	github.com/google/uuid v1.6.0
-	github.com/melisource/fury_go-core v1.11.1
+	github.com/melisource/fury_go-core v1.11.2
 	github.com/melisource/fury_go-platform v1.11.2
 	github.com/spf13/viper v1.18.2
 )

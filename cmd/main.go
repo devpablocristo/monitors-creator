@@ -8,6 +8,7 @@ import (
 	usecase "monitors-creator/internal/monitors-creator"
 	"monitors-creator/internal/monitors-creator/monitor"
 	"monitors-creator/internal/platform/memdb"
+	"monitors-creator/internal/platform/restclient"
 )
 
 func init() {
@@ -20,7 +21,16 @@ func main() {
 
 	db := memdb.NewDB()
 	r := monitor.NewMemoryRepo(db)
-	u := usecase.NewMonitorUsecase(r)
+
+	a := config.Get().DatadogURL
+	fmt.Println(a)
+
+	endpoint, err := restclient.NewEndpoint(config.Get().DatadogURL)
+	if err != nil {
+		panic(err)
+	}
+
+	u := usecase.NewMonitorUsecase(r, endpoint)
 	h := handlers.NewMonitorHandler(u)
 
 	if err := handlers.NewFuryApplication(h); err != nil {

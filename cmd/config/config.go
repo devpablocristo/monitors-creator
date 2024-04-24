@@ -54,6 +54,7 @@ func LoadMonitorCreatorConfig() {
 			Kind:       viper.GetString("auth.kind"),
 			Middleware: viper.GetString("auth.middleware"),
 		},
+		DatadogURL: viper.GetString("datadog_api_url"),
 		ClientAuth: HTTPClientCredential{
 			Token:    os.Getenv("FURY_TOKEN"),
 			ClientID: os.Getenv("SECRET_CLIENT_ID"),

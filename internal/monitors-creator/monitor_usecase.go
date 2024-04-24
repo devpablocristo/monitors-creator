@@ -2,15 +2,21 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 	"monitors-creator/internal/monitors-creator/monitor"
+	"monitors-creator/internal/platform/restclient"
 )
 
 type MonitorUsecase struct {
 	repository monitor.MonitorRepositoryPort
+	datadog    *restclient.EndpointType
 }
 
-func NewMonitorUsecase(repo monitor.MonitorRepositoryPort) monitor.MonitorUsecasePort {
-	return &MonitorUsecase{repository: repo}
+func NewMonitorUsecase(repo monitor.MonitorRepositoryPort, dg *restclient.EndpointType) monitor.MonitorUsecasePort {
+	return &MonitorUsecase{
+		repository: repo,
+		datadog:    dg,
+	}
 }
 
 func (u MonitorUsecase) CreateMonitor(ctx context.Context, monitor *monitor.Monitor) error {
@@ -34,5 +40,10 @@ func (u MonitorUsecase) DeleteMonitor(ctx context.Context, id string) error {
 }
 
 func (u MonitorUsecase) GetAllMonitors(ctx context.Context) ([]monitor.Monitor, error) {
+	var r monitor.DatadogResponse
+	if err := u.datadog.Get(ctx, &r); err != nil {
+		return nil, err
+	}
+	fmt.Println(r)
 	return u.repository.GetAll()
 }

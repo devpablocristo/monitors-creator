@@ -63,6 +63,8 @@ github.com/magiconair/properties v1.8.7 h1:IeQXZAiQcpL9mgcAe1Nu6cX9LLw6ExEHKjN0V
 github.com/magiconair/properties v1.8.7/go.mod h1:Dhd985XPs7jluiymwWYZ0G4Z61jb3vdS329zhj2hYo0=
 github.com/melisource/fury_go-core v1.11.1 h1:LsgeEFbH48FR/QnewqVZe6611eukgfxOU///A8faiGs=
 github.com/melisource/fury_go-core v1.11.1/go.mod h1:uFDTCpEAAWy7JN9e6sBWB6wWIfCmvENI2VMM+PsOcEE=
+github.com/melisource/fury_go-core v1.11.2 h1:b7eXi7jok0ZhtpfwTXXVHp06DSzD6Hk90eBybeGTvKU=
+github.com/melisource/fury_go-core v1.11.2/go.mod h1:WL9i0tRTdHPpd8SQzblskKVTPdIlBAoQw95f/OseAA8=
 github.com/melisource/fury_go-platform v1.11.2 h1:SFoesvGPnkErnpoE/O+pE47zLLnUTBbKVKojITd9IIM=
 github.com/melisource/fury_go-platform v1.11.2/go.mod h1:Tb2m9CZC67C2j7y9Fh+trhm40g7qB/7QhQjaqiokjfA=
 github.com/melisource/fury_go-toolkit-mlauth v0.2.7 h1:QIRB5HjF3JIqwydPPzd203ytld4G+FeVfZVdd7jWMpI=
