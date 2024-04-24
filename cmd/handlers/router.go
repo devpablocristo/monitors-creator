@@ -32,13 +32,21 @@ func NewHTTPServer(h MonitorHandler) error {
 
 func NewFuryApplication(handler *MonitorHandler) error {
 	app, err := fury.NewWebApplication()
-	fmt.Println(app)
 	if err != nil {
 		return err
 	}
+
+	
+
+
+
+
 	app.Method(http.MethodPost, "/teste", func(w http.ResponseWriter, r *http.Request) error {
 		return web.EncodeJSON(w, "MEU OVO", http.StatusOK)
 	})
+
+
+
 	app.Get("/hello", func(w http.ResponseWriter, r *http.Request) error {
 		name := r.URL.Query().Get("name")
 		if name == "" {
