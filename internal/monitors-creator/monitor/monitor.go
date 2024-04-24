@@ -1,6 +1,8 @@
 package monitor
 
 import (
+	"net/mail"
+
 	"github.com/corthmann/go-time-intervals/timeinterval"
 	"github.com/google/uuid"
 
@@ -8,15 +10,15 @@ import (
 )
 
 type Monitor struct {
-	ID           ID
-	Brand        Brand
-	BusinessUnit BusinessUnit
-	Product      Product
-	Flow         Flow
-	Platform     Platform
-	BrandIdentifiers  brandid.BrandIdentifiers
-	MonthlyTPV   MonthlyTPV
-	KAM          KAM
+	ID               ID
+	Brand            Brand
+	BusinessUnit     BusinessUnit
+	Product          Product
+	Flow             Flow
+	Platform         Platform
+	BrandIdentifiers brandid.BrandIdentifiers
+	MonthlyTPV       MonthlyTPV
+	KAM              KAM
 }
 
 type Name string
@@ -36,13 +38,26 @@ func (n Name) isEmpty() bool {
 
 type ID string
 
-func (i *ID) Create() string {
-	return uuid.New().String()
+func (i ID) String() string {
+	return string(i)
+}
+
+func (i *ID) Create() ID {
+	return ID(uuid.New().String())
 }
 
 type Enabled bool
 
 type Email string
+
+func (e Email) String() string {
+	return string(e)
+}
+
+func (e Email) Validate() bool {
+	_, err := mail.ParseAddress(e.String())
+	return err == nil
+}
 
 type Phone string
 
