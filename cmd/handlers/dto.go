@@ -5,7 +5,7 @@ import (
 )
 
 func MonitorResponse(m monitor.Monitor) *MonitorPayload {
-	//TODO FIX THIS SHIT
+	//TODO FIX THIS
 	return &MonitorPayload{
 		ID: "123",
 	}

@@ -39,8 +39,8 @@ func (m *MemRepo) Get(id string) (*Monitor, error) {
 	return monitor, nil
 }
 
-func (m *MemRepo) GetAll() ([]*Monitor, error) {
-	var monitors []*Monitor
+func (m *MemRepo) GetAll() ([]Monitor, error) {
+	var monitors []Monitor
 	for _, value := range m.db {
 		monitor, ok := value.(*Monitor)
 		if !ok {
