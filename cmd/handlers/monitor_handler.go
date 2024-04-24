@@ -66,5 +66,15 @@ func (h MonitorHandler) DeleteMonitor(w http.ResponseWriter, r *http.Request) er
 }
 
 func (h MonitorHandler) GetAllMonitors(w http.ResponseWriter, r *http.Request) error {
-	return nil
+	ctx := r.Context()
+
+	monitor, err := h.usecase.GetAllMonitors(ctx)
+	if err != nil {
+		// TODO: MYLOG
+		return web.EncodeJSON(w, err, http.StatusInternalServerError)
+	}
+
+	// TODO: CHAMAR DOMAIN2JSON OU PASSAR STRUCT DIRETO
+	// TODO: MYLOG
+	return web.EncodeJSON(w, monitor, http.StatusOK)
 }
