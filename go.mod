@@ -5,7 +5,7 @@ go 1.21
 toolchain go1.22.1
 
 require (
-	github.com/corthmann/go-time-intervals v0.0.0-20190625085138-4c18cb04b8d6
+	github.com/go-playground/validator/v10 v10.19.0
 	github.com/google/uuid v1.6.0
 	github.com/melisource/fury_go-core v1.11.2
 	github.com/melisource/fury_go-platform v1.11.2
@@ -24,7 +24,6 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.19.0 // indirect
 	github.com/gofrs/uuid v4.4.0+incompatible // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.18.1 // indirect

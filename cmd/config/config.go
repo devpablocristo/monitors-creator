@@ -44,6 +44,7 @@ func LoadMonitorCreatorConfig() {
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	viper.SetConfigName(configName)
 	viper.AddConfigPath("../config")
+	viper.AddConfigPath("config")
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
 	}
