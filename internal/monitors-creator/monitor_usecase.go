@@ -12,10 +12,10 @@ type MonitorUsecase struct {
 	datadog    *restclient.EndpointType
 }
 
-func NewMonitorUsecase(repo monitor.MonitorRepositoryPort, dg *restclient.EndpointType) monitor.MonitorUsecasePort {
+func NewMonitorUsecase(repo monitor.MonitorRepositoryPort, datadog *restclient.EndpointType) monitor.MonitorUsecasePort {
 	return &MonitorUsecase{
 		repository: repo,
-		datadog:    dg,
+		datadog:    datadog,
 	}
 }
 

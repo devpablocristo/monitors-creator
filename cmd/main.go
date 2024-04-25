@@ -22,15 +22,12 @@ func main() {
 	db := memdb.NewDB()
 	r := monitor.NewMemoryRepo(db)
 
-	a := config.Get().DatadogURL
-	fmt.Println(a)
-
-	endpoint, err := restclient.NewEndpoint(config.Get().DatadogURL)
+	datadog, err := restclient.NewEndpoint(config.Get().DatadogURL)
 	if err != nil {
 		panic(err)
 	}
 
-	u := usecase.NewMonitorUsecase(r, endpoint)
+	u := usecase.NewMonitorUsecase(r, datadog)
 	h := handlers.NewMonitorHandler(u)
 
 	if err := handlers.NewFuryApplication(h); err != nil {
