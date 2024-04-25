@@ -2,4 +2,4 @@ log_level: debug
 auth:
   kind: user #user/app
   middleware: dummy #dummy/user
-datadog_api_url: https://api.us5.datadoghq.com
+datadog_api_url: https://api.us5.datadoghq.com/api/v1/monitor?group_states=all
