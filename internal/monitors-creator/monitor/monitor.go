@@ -2,23 +2,71 @@ package monitor
 
 import (
 	"net/mail"
+	"strconv"
+	"time"
 
-	"github.com/corthmann/go-time-intervals/timeinterval"
 	"github.com/google/uuid"
-
-	"monitors-creator/internal/monitors-creator/monitor/brandid"
 )
 
 type Monitor struct {
-	ID               ID
-	Brand            Brand
-	BusinessUnit     BusinessUnit
-	Product          Product
-	Flow             Flow
-	Platform         Platform
-	BrandIdentifiers brandid.BrandIdentifiers
-	MonthlyTPV       MonthlyTPV
-	KAM              KAM
+	ID                    ID
+	BusinessUnit          BusinessUnit
+	Product               Product
+	BrandName             Name
+	Flow                  Flow
+	Site                  Site
+	Descripion            Description
+	BusinessHours         BusinessHours
+	Integration           Integration
+	MonthlyTPV            Currency
+	KAM                   Email
+	SellerContact         Email
+	TechnicalContact      Email
+	MarketplaceID         ID
+	PlatformID            ID
+	SponsorID             ID
+	CollectorID           []ID
+	ApplicationOrClientID ID
+	BrandID               ID
+}
+
+type BusinessHours struct {
+	Sunday    []Hours
+	Monday    []Hours
+	Tuesday   []Hours
+	Wednesday []Hours
+	Thursday  []Hours
+	Friday    []Hours
+	Saturday  []Hours
+}
+
+type Hours struct {
+	Open  time.Time
+	Close time.Time
+}
+
+type BusinessUnit string
+
+func (bu BusinessUnit) String() string {
+	return string(bu)
+}
+
+type Integration string
+
+func (i Integration) String() string {
+	return string(i)
+}
+
+type Site string
+
+func (s Site) String() string {
+	return string(s)
+}
+
+type Product string
+
+func (p Product) String() string {
+	return string(p)
 }
 
 type Name string
@@ -27,13 +75,15 @@ func (n Name) String() string {
 	return string(n)
 }
 
-func (n Name) Validate() bool {
-	return len(n) < 50 &&
-		len(n) > 3
+type Description string
+
+func (d Description) String() string {
+	return string(d)
 }
 
-func (n Name) isEmpty() bool {
-	return n.String() == ""
+func (d Description) Validate() bool {
+	return len(d) < 200 &&
+		len(d) > 10
 }
 
 type ID string
@@ -48,6 +98,10 @@ func (i *ID) Create() ID {
 
 type Enabled bool
 
+func (e Enabled) String() string {
+	return strconv.FormatBool(bool(e))
+}
+
 type Email string
 
 func (e Email) String() string {
@@ -59,51 +113,14 @@ func (e Email) Validate() bool {
 	return err == nil
 }
 
-type Phone string
+type Flow string
 
-type URL string
-
-type TransactionFlow string
-
-type Platform string
+func (f Flow) String() string {
+	return string(f)
+}
 
 type Currency float64
 
-type Brand struct {
-	Name             Name
-	Site             URL
-	CustomerHours    CustomerHours
-	SellerContact    Contact
-	TechnicalContact Contact
-}
-
-type BusinessUnit struct {
-	Name Name
-}
-
-type Product struct {
-	Name Name
-}
-
-type Flow struct {
-	TransactionFlow TransactionFlow
-}
-
-type CustomerHours struct {
-	SupportHours timeinterval.Interval
-	WorkingHours timeinterval.Interval
-}
-
-type MonthlyTPV struct {
-	USD Currency
-}
-
-type KAM struct {
-	AccountManager Contact
-}
-
-type Contact struct {
-	Name  Name
-	Email Email
-	Phone Phone
+func (c Currency) String() string {
+	return strconv.FormatFloat(float64(c), 'f', 2, 64)
 }
